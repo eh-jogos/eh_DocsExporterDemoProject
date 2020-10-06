@@ -1,0 +1,45 @@
+[gd_resource type="Resource" load_steps=7 format=2]
+
+[ext_resource path="res://addons/eh_jogos.docs-exporter/custom_resources/CategoryOptionalDataDict.gd" type="Script" id=1]
+[ext_resource path="res://addons/eh_jogos.docs-exporter/custom_resources/CategoryOptionalData.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+weight = 2
+description = "Custom Resources used by the plugin."
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+weight = 3
+description = "UI Elements used in the Docs Exporter tab."
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 2 )
+weight = 4
+description = "Custom compenents with logic that can be shared between different kinds of nodes."
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 2 )
+weight = 5
+description = "Simple Custom Resources that can be saved to disk an represent only one variable of one type. Since Rsources are only loaded once and shared between all their references in code, it is used as some kind of shared variables so that the data it holds can be accessed and modified from multiple parts of the code and always stays in sync.
+
+This ones are saved in a separate folder because they're all custom resources that represent basic types and can be reused between projects and different plugins, so that If you already have this folder from another plugin, you won't have any class_name conflicts and will only have to import the scripts you don't have.
+
+In this plugin it is basically used so that you can edit data in the Docs Exporter Tab and have this data easily accessible by the code.
+
+It is based on the idea of Unity's Scriptable Objects and Ryan Hipple's Unite Talk about architeting games around scriptable objects.  
+Reference Links:
+- [Text How To](https://unity.com/how-to/architect-game-code-scriptable-objects#architect-other-systems)
+- [Unite Talk Video](https://www.youtube.com/watch?v=raQ3iHhE_Kk)
+- [Ryans Example Repository](https://github.com/roboryantron/Unite2017)
+
+TOC:"
+
+[resource]
+script = ExtResource( 1 )
+value = {
+"Components": SubResource( 3 ),
+"Custom Resources": SubResource( 1 ),
+"Shared Variables": SubResource( 4 ),
+"UI Elements": SubResource( 2 )
+}

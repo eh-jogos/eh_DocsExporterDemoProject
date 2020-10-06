@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://addons/eh_jogos.shared_variables/StringVariable.gd" type="Script" id=1]
+[ext_resource path="res://addons/eh_jogos.shared_variables/StringVariableArray.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 1 )
+value = "res://addons/eh_jogos.docs-exporter"
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 1 )
+value = "res://addons/eh_jogos.shared_variables"
+
+[resource]
+script = ExtResource( 2 )
+value = [ SubResource( 1 ), SubResource( 2 ) ]
