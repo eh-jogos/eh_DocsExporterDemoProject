@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 value = "[Home](Home)  
-  
-[Documentation Site](https://eh-jogos.github.io/eh_DocsExporter//)  
+[Installation](Installation)  
+[Documenting your code](Documenting)  
+[Exporting your documentation](Exporting)  
+[Help and Support](Help)  
   
 **Quick Reference**  
 "
