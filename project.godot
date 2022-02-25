@@ -103,6 +103,11 @@ _global_script_classes=[ {
 "class": "StringVariableLineEdit",
 "language": "GDScript",
 "path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/StringVariableLineEdit.gd"
+}, {
+"base": "Resource",
+"class": "eh_DocsSettings",
+"language": "GDScript",
+"path": "res://addons/eh_jogos.docs-exporter/custom_resources/DocsSettings.gd"
 } ]
 _global_script_class_icons={
 "ArrayVariable": "",
@@ -123,7 +128,8 @@ _global_script_class_icons={
 "StringArrayVariable": "",
 "StringVariable": "",
 "StringVariableArray": "",
-"StringVariableLineEdit": ""
+"StringVariableLineEdit": "",
+"eh_DocsSettings": ""
 }
 
 [application]
