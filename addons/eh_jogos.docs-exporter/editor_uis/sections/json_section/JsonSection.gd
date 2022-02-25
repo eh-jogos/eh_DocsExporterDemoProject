@@ -13,6 +13,7 @@ extends VBoxContainer
 
 #--- private variables - order: export > normal var > onready -------------------------------------
 
+var _settings: eh_DocsSettings = null
 var _reference_formatter: ReferenceFormatter
 
 var _directories: StringVariableArray = null
@@ -38,14 +39,21 @@ func _ready() -> void:
 	_is_recursive = _resource_preloader.get_resource("is_recursive")
 	_save_path = _resource_preloader.get_resource("save_path")
 	
-	_directories_column.populate_editor_fields(_directories)
-	_filters_column.populate_editor_fields(_filters)
-	_json_path_selector.set_string_variable(_save_path)
+	if get_tree().current_scene == self:
+		load_settings(load("res://addons/eh_jogos.docs-exporter/docs_settings.tres"))
+
 
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Public Methods --------------------------------------------------------------------------------
+
+func load_settings(value: eh_DocsSettings) -> void:
+	_settings = value
+	if _settings != null:
+		_directories_column.initialize_editor_fields(_settings, "directories")
+#		_filters_column.populate_editor_fields(_filters)
+#		_json_path_selector.set_string_variable(_save_path)
 
 ### -----------------------------------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-# Base class for any kind of PathLineEdit field. Receives a [StringVariable], which will be 
+# Base class for any kind of PathLineEdit field. Receives a [String], which will be 
 # responsible not only for the persistence of the data as well as sharing it with any part
 # of the project that needs it.
 #
@@ -13,7 +13,8 @@ extends HBoxContainer
 ### Member Variables and Dependencies -------------------------------------------------------------
 #--- signals --------------------------------------------------------------------------------------
 
-signal remove_string_variable(string_variable)
+signal update_value(index, value)
+signal remove_value(index)
 
 #--- enums ----------------------------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ export var is_removable: = false setget _set_is_removable
 
 #--- private variables - order: export > normal var > onready -------------------------------------
 
-var _path_variable: StringVariable = null
+var _index: int = -1
 
 onready var _line_edit: LineEdit = $PathLineEdit
 onready var _file_dialog: FileDialog = $FileExplorerButton/FileDialog
@@ -49,9 +50,14 @@ func _ready() -> void:
 ### Public Methods --------------------------------------------------------------------------------
 
 # Sets the StringVariable this field will be attached to and populates the LineEdit with its value.
-func set_string_variable(resource: StringVariable) -> void:
-	_path_variable = resource
-	_line_edit.set_text(_path_variable.value)
+func set_field_value(value: String, index: int) -> void:
+	_line_edit.set_text(value)
+	_index = index
+	
+	if _index == 0:
+		_set_is_removable(false)
+	else:
+		_set_is_removable(true)
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -64,7 +70,7 @@ func _set_is_removable(value: bool) -> void:
 
 
 func _update_path_variable(path: String) -> void:
-	_path_variable.value = path
+	emit_signal("update_value", _index, path)
 
 
 func _on_LineEdit_text_changed(new_text: String) -> void:
@@ -84,6 +90,6 @@ func _on_FileDialog_file_selected(path: String) -> void:
 
 
 func _on_DeleteButton_pressed():
-	emit_signal("remove_string_variable", _path_variable)
+	emit_signal("remove_value", _index)
 
 ### -----------------------------------------------------------------------------------------------

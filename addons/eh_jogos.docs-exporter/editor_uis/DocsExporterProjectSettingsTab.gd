@@ -1,7 +1,6 @@
-# Holds all the configuration data for correctly exporting the documentation.
+# Write your doc string for this file here
 tool
-class_name eh_DocsSettings
-extends Resource
+extends Control
 
 ### Member Variables and Dependencies -------------------------------------------------------------
 #--- signals --------------------------------------------------------------------------------------
@@ -12,12 +11,12 @@ extends Resource
 
 #--- public variables - order: export > normal var > onready --------------------------------------
 
-export(Array, String, DIR) var directories: Array = [] setget _set_directories
-export(Array, String) var filters: Array = []
-export var is_recursive: bool = true
-export(String, DIR, GLOBAL) var save_path: String = ""
-
 #--- private variables - order: export > normal var > onready -------------------------------------
+
+var _settings: eh_DocsSettings
+var _editor_interface: EditorInterface
+
+onready var sections = $Panel/ScrollContainer/ContentList.get_children()
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -32,17 +31,24 @@ func _ready() -> void:
 
 ### Public Methods --------------------------------------------------------------------------------
 
-func is_valid_string_array_property(p_property: String) -> bool:
-	return p_property == "directories" or p_property == "filters"
+func initialize_tab(settings: eh_DocsSettings, p_editor_interface: EditorInterface) -> void:
+	_editor_interface = p_editor_interface
+	_settings = settings
+	connect("visibility_changed", self, "_on_visibility_changed")
 
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Private Methods -------------------------------------------------------------------------------
 
-func _set_directories(value: Array) -> void:
-	if value.empty():
-		value = [""]
-	directories = value
+func _update_sections() -> void:
+	for section in sections:
+		if section.has_method("load_settings"):
+			section.load_settings(_settings)
+
+
+func _on_visibility_changed() -> void:
+	if visible:
+		_update_sections()
 
 ### -----------------------------------------------------------------------------------------------
