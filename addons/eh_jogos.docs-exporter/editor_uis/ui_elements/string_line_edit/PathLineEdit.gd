@@ -1,13 +1,12 @@
-# LineEdit Field for simple [StringVariable]s.
+# LineEdit for receiving file or folder paths. Has a small customization just to scroll the text
+# to the end whenever a file or folder is selected through the File Explorer instead of typed in.
 # @category: UI Elements
 tool
-class_name StringVariableLineEdit
+class_name PathLineEdit
 extends LineEdit
 
 ### Member Variables and Dependencies -------------------------------------------------------------
 #--- signals --------------------------------------------------------------------------------------
-
-signal remove_string_variable(string_variable)
 
 #--- enums ----------------------------------------------------------------------------------------
 
@@ -15,12 +14,7 @@ signal remove_string_variable(string_variable)
 
 #--- public variables - order: export > normal var > onready --------------------------------------
 
-export var is_removable: = false setget _set_is_removable
-
 #--- private variables - order: export > normal var > onready -------------------------------------
-
-var _string_variable: StringVariable = null
-onready var _delete_button: Button = $DeleteButton
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -29,37 +23,23 @@ onready var _delete_button: Button = $DeleteButton
 
 ### -----------------------------------------------------------------------------------------------
 
-
 ### Public Methods --------------------------------------------------------------------------------
 
-# Sets the StringVariable this field will be attached to and populates the LineEdit with its value.
-func set_string_variable(resource: StringVariable) -> void:
-	_string_variable = resource
-	text = _string_variable.value
+# Sets the text and scrolls it to the end position.
+func set_text(string: String) -> void:
+	text = string
+	var total_chars = text.length()
+	caret_position = total_chars-1
 
 ### -----------------------------------------------------------------------------------------------
 
-
 ### Private Methods -------------------------------------------------------------------------------
 
-func _set_is_removable(value: bool) -> void:
-	is_removable = value
-	_delete_button.visible = value
+func _on_FileDialog_file_selected(path):
+	set_text(path)
 
 
-func _update_string_resource(value: String) -> void:
-	_string_variable.value = value
-
-
-func _on_StringVariableLineEdit_text_changed(new_text: String):
-	_update_string_resource(new_text)
-
-
-func _on_StringVariableLineEdit_text_entered(new_text: String):
-	_update_string_resource(new_text)
-
-
-func _on_DeleteButton_pressed():
-	emit_signal("remove_string_variable", _string_variable)
+func _on_FileDialog_dir_selected(dir):
+	set_text(dir)
 
 ### -----------------------------------------------------------------------------------------------

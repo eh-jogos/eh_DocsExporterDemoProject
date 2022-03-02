@@ -49,10 +49,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/eh_jogos.shared_variables/DictionaryVariable.gd"
 }, {
-"base": "HBoxContainer",
+"base": "StringLineEdit",
 "class": "FilePathLineEdit",
 "language": "GDScript",
-"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/path_line_edit/FilePathLineEdit.gd"
+"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/PathFileLineEdit.gd"
 }, {
 "base": "MarkdownDocsExporter",
 "class": "HugoMarkdownDocsExporter",
@@ -69,10 +69,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/eh_jogos.docs-exporter/godot_docs_scripts/MarkdownDocsExporter.gd"
 }, {
-"base": "LineEdit",
+"base": "Reference",
 "class": "PathLineEdit",
 "language": "GDScript",
-"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/path_line_edit/PathLineEdit.gd"
+"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/PathLineEdit.gd"
 }, {
 "base": "JsonIO",
 "class": "ReferenceFormatter",
@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/eh_jogos.shared_variables/Array/StringArrayVariable.gd"
 }, {
+"base": "HBoxContainer",
+"class": "StringLineEdit",
+"language": "GDScript",
+"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/StringLineEdit.gd"
+}, {
 "base": "Resource",
 "class": "StringVariable",
 "language": "GDScript",
@@ -98,11 +103,6 @@ _global_script_classes=[ {
 "class": "StringVariableArray",
 "language": "GDScript",
 "path": "res://addons/eh_jogos.shared_variables/StringVariableArray.gd"
-}, {
-"base": "LineEdit",
-"class": "StringVariableLineEdit",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/StringVariableLineEdit.gd"
 }, {
 "base": "EditorPlugin",
 "class": "eh_DocsExporterPlugin",
@@ -131,9 +131,9 @@ _global_script_class_icons={
 "ReferenceFormatter": "",
 "ResizableTextEdit": "",
 "StringArrayVariable": "",
+"StringLineEdit": "",
 "StringVariable": "",
 "StringVariableArray": "",
-"StringVariableLineEdit": "",
 "eh_DocsExporterPlugin": "",
 "eh_DocsSettings": ""
 }
