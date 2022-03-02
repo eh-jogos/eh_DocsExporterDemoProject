@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "CheckBox",
 "class": "BoolVariableCheckbox",
 "language": "GDScript",
-"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/bool_checkbox/BoolVariableCheckbox.gd"
+"path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/settings_editors/SettingsBoolUI.gd"
 }, {
 "base": "Resource",
 "class": "CategoryOptionalData",

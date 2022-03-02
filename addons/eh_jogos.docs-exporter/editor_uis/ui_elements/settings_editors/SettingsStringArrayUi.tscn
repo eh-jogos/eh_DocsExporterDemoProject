@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/editor_button_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/icons/icon_add.svg" type="Texture" id=2]
-[ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/SettingsStringArrayUi.gd" type="Script" id=3]
-[ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/editor_button_theme.tres" type="Theme" id=4]
+[ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/settings_editors/SettingsStringArrayUi.gd" type="Script" id=3]
 
 [node name="DirectoriesColum" type="VBoxContainer"]
 margin_left = 511.0
@@ -24,7 +24,7 @@ margin_top = 4.0
 margin_right = 507.0
 margin_bottom = 35.0
 size_flags_horizontal = 8
-theme = ExtResource( 4 )
+theme = ExtResource( 1 )
 custom_constants/hseparation = 10
 text = "Add folder"
 icon = ExtResource( 2 )

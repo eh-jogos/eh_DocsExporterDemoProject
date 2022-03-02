@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/bool_checkbox/BoolVariableCheckbox.gd" type="Script" id=1]
+[ext_resource path="res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/settings_editors/SettingsBoolUI.gd" type="Script" id=1]
 
 [node name="BoolVariableCheckbox" type="CheckBox"]
 margin_left = 511.0
@@ -13,6 +13,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+property = "is_recursive"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 show_behind_parent = true

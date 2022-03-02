@@ -15,7 +15,7 @@ extends Resource
 export(Array, String, DIR) var directories: Array = [] setget _set_directories
 export(Array, String) var filters: Array = []
 export var is_recursive: bool = true
-export(String, DIR, GLOBAL) var save_path: String = ""
+export(String, FILE, GLOBAL, "*.json") var save_path: String = ""
 
 #--- private variables - order: export > normal var > onready -------------------------------------
 

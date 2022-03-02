@@ -1,6 +1,6 @@
-# Script for columns that need to populate PoolStringArray fields.
+# Write your doc string for this file here
 tool
-extends VBoxContainer
+extends HBoxContainer
 
 ### Member Variables and Dependencies -------------------------------------------------------------
 #--- signals --------------------------------------------------------------------------------------
@@ -9,82 +9,71 @@ extends VBoxContainer
 
 #--- constants ------------------------------------------------------------------------------------
 
-# value found by printing the resources property dict, but documented HINT constants 
-# only go up to 22
-const HINT_STRING_ARRAY = 24
+const EXCLUDED_PROPERTIES = [
+		"resource_path",
+		"resource_name",
+]
 
 #--- public variables - order: export > normal var > onready --------------------------------------
 
 #--- private variables - order: export > normal var > onready -------------------------------------
 
-export var _editor_field_packed_scene: PackedScene = null
-
-var _property: String = ""
-
-var _string_array: Array = []
+var _property: String = "" setget _set_property
+var _possible_properties: PoolStringArray = PoolStringArray()
 
 onready var _settings: eh_DocsSettings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE)
-onready var _field_container: VBoxContainer = $Fields
+
+onready var _line_edit: LineEdit = $LineEdit
+onready var _file_dialog: FileDialog = $FileExplorerButton/FileDialog
 
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Built in Engine Methods -----------------------------------------------------------------------
 
-func _ready():
-	initialize_editor_fields()
+func _ready() -> void:
+	_line_edit.text = _settings.get(_property)
 
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Public Methods --------------------------------------------------------------------------------
 
-func initialize_editor_fields() -> void:
-	_string_array = _settings.get(_property)
-	_populate_editor_fields()
-
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Private Methods -------------------------------------------------------------------------------
 
-# Populates with some kind of editor field that accepts a StringVariable, and gives each one it's
-# respective StringVariable. Also takes care of showing the delete button when needed and
-# connecting it to its function.
-func _populate_editor_fields() -> void:
-	for row in _field_container.get_children():
-		_field_container.remove_child(row)
-		row.queue_free()
+func _set_property(value: String) -> void:
+	_property = value
 	
-	var row_count: = 0
-	for value in _string_array:
-		var editor_field: FilePathLineEdit = _editor_field_packed_scene.instance()
-		_field_container.add_child(editor_field, true)
-		editor_field.set_field_value(value, row_count)
-		
-		editor_field.connect("update_value", self, "_on_editor_field_update_value")
-		if editor_field.is_removable:
-			editor_field.connect("remove_value", self, "_on_editor_field_remove_value")
-		
-		row_count += 1
-
-
-func _on_AddMore_pressed() -> void:
-	_string_array.append("")
-	_populate_editor_fields()
-
-
-func _on_editor_field_update_value(index: int, value: String) -> void:
-	if index > _string_array.size():
-		for new_index in range(_string_array.size(), index):
-			_string_array.append("")
+	if not is_inside_tree():
+		yield(self, "ready")
 	
-	_string_array[index] = value
+	_update_filters_for_property()
 
 
-func _on_editor_field_remove_value(index: int) -> void:
-	_string_array.remove(index)
-	_populate_editor_fields()
+func _update_filters_for_property() -> void:
+	var settings_properties: = _settings.get_property_list()
+	for property_dict in settings_properties:
+		if property_dict.name in EXCLUDED_PROPERTIES:
+			continue
+		elif property_dict.name == _property:
+			var filters = (property_dict.hint_string as String).split(",")
+			_file_dialog.filters = PoolStringArray(filters)
+
+
+func _on_LineEdit_text_changed(new_text: String) -> void:
+	_settings.set(_property, new_text)
+
+
+func _on_LineEdit_text_entered(new_text: String) -> void:
+	_settings.set(_property, new_text)
+
+
+func _on_FileDialog_file_selected(path: String) -> void:
+	_line_edit.text = path
+	_settings.set(_property, path)
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -98,7 +87,7 @@ func _get_property_list() -> Array:
 	var properties: = []
 	
 	_reload_settings_resource()
-	_add_string_array_property_drop_down(properties)
+	_add_string_property_drop_down(properties)
 	
 	return properties
 
@@ -108,7 +97,10 @@ func _get(property: String):
 	
 	match property:
 		"property":
-			value = _property
+			if _property.empty():
+				value = _possible_properties[0]
+			else:
+				value = _property
 	
 	return value
 
@@ -118,7 +110,7 @@ func _set(property: String, value) -> bool:
 	
 	match property:
 		"property":
-			_property = value
+			_set_property(value)
 			has_handled = true
 	
 	return has_handled
@@ -133,9 +125,9 @@ func _reload_settings_resource() -> void:
 		_settings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE)
 
 
-func _add_string_array_property_drop_down(properties: Array) -> void:
-	var string_array_properties: = _get_possible_string_array_properties()
-	var hint_string: String = string_array_properties.join(",")
+func _add_string_property_drop_down(properties: Array) -> void:
+	_possible_properties = _get_possible_string_properties()
+	var hint_string: String = _possible_properties.join(",")
 	
 	var dict: = {
 		name = "property",
@@ -147,14 +139,17 @@ func _add_string_array_property_drop_down(properties: Array) -> void:
 	properties.append(dict)
 
 
-func _get_possible_string_array_properties() -> PoolStringArray:
-	var string_array_properties: = PoolStringArray()
+func _get_possible_string_properties() -> PoolStringArray:
+	var value: = PoolStringArray()
 	
 	var settings_properties: = _settings.get_property_list()
 	for property_dict in settings_properties:
-		if property_dict.type == TYPE_ARRAY and property_dict.hint == HINT_STRING_ARRAY:
-			string_array_properties.append(property_dict.name)
+		if property_dict.name in EXCLUDED_PROPERTIES:
+			continue
+		
+		if property_dict.type == TYPE_STRING and property_dict.hint == PROPERTY_HINT_GLOBAL_FILE:
+			value.append(property_dict.name)
 	
-	return string_array_properties
+	return value
 
 ### -----------------------------------------------------------------------------------------------
