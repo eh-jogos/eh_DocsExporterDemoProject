@@ -13,7 +13,6 @@ extends VBoxContainer
 
 #--- private variables - order: export > normal var > onready -------------------------------------
 
-var _settings: eh_DocsSettings = null
 var _reference_formatter: ReferenceFormatter
 
 var _directories: StringVariableArray = null
@@ -25,6 +24,9 @@ onready var _directories_column = $DirectoriesRow/DirectoriesColum
 onready var _filters_column = $FiltersRow/FilterColumn
 onready var _json_path_selector = $JsonReferenceRow/JsonPathSelector
 onready var _resource_preloader = $ResourcePreloader
+
+# Maybe transform this into a static function from the plugin clas?
+onready var _settings: eh_DocsSettings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE) as eh_DocsSettings
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -38,10 +40,6 @@ func _ready() -> void:
 	_filters = _resource_preloader.get_resource("filters")
 	_is_recursive = _resource_preloader.get_resource("is_recursive")
 	_save_path = _resource_preloader.get_resource("save_path")
-	
-	if get_tree().current_scene == self:
-		load_settings(load("res://addons/eh_jogos.docs-exporter/docs_settings.tres"))
-
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -51,9 +49,8 @@ func _ready() -> void:
 func load_settings(value: eh_DocsSettings) -> void:
 	_settings = value
 	if _settings != null:
-		_directories_column.initialize_editor_fields(_settings, "directories")
-#		_filters_column.populate_editor_fields(_filters)
 #		_json_path_selector.set_string_variable(_save_path)
+		pass
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -62,10 +59,10 @@ func load_settings(value: eh_DocsSettings) -> void:
 
 func _on_ExportJson_pressed() -> void:
 	_reference_formatter.export_formatted_reference_json(
-			_directories.get_string_array(),
-			_filters.get_string_array(),
-			_is_recursive.value,
-			_save_path.value
+			_settings.directories,
+			_settings.filters,
+			_settings.is_recursive,
+			_settings.save_path
 	)
 
 ### -----------------------------------------------------------------------------------------------
