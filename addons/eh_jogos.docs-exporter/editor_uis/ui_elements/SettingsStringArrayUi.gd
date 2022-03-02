@@ -9,14 +9,21 @@ extends VBoxContainer
 
 #--- constants ------------------------------------------------------------------------------------
 
+# value found by printing the resources property dict, but documented HINT constants 
+# only go up to 22
+const HINT_STRING_ARRAY = 24
+
 #--- public variables - order: export > normal var > onready --------------------------------------
 
 #--- private variables - order: export > normal var > onready -------------------------------------
 
 export var _editor_field_packed_scene: PackedScene = null
 
+var _property: String = ""
+
 var _string_array: Array = []
 
+onready var _settings: eh_DocsSettings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE)
 onready var _field_container: VBoxContainer = $Fields
 
 ### -----------------------------------------------------------------------------------------------
@@ -25,20 +32,16 @@ onready var _field_container: VBoxContainer = $Fields
 ### Built in Engine Methods -----------------------------------------------------------------------
 
 func _ready():
-	pass
+	initialize_editor_fields()
 
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Public Methods --------------------------------------------------------------------------------
 
-func initialize_editor_fields(p_settings: eh_DocsSettings, p_property: String) -> void:
-	if not p_settings.is_valid_string_array_property(p_property):
-		push_error("%s is not a valid propertty for String fields"%[p_property])
-		return
-	_string_array = p_settings.get(p_property)
+func initialize_editor_fields() -> void:
+	_string_array = _settings.get(_property)
 	_populate_editor_fields()
-
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -82,5 +85,76 @@ func _on_editor_field_update_value(index: int, value: String) -> void:
 func _on_editor_field_remove_value(index: int) -> void:
 	_string_array.remove(index)
 	_populate_editor_fields()
+
+### -----------------------------------------------------------------------------------------------
+
+###################################################################################################
+# Editor Methods ##################################################################################
+###################################################################################################
+
+### Custom Inspector builçt in functions ----------------------------------------------------------
+
+func _get_property_list() -> Array:
+	var properties: = []
+	
+	_reload_settings_resource()
+	_add_string_array_property_drop_down(properties)
+	
+	return properties
+
+
+func _get(property: String):
+	var value
+	
+	match property:
+		"property":
+			value = _property
+	
+	return value
+
+
+func _set(property: String, value) -> bool:
+	var has_handled: = false
+	
+	match property:
+		"property":
+			_property = value
+			has_handled = true
+	
+	return has_handled
+
+### -----------------------------------------------------------------------------------------------
+
+
+### Helpers ---------------------------------------------------------------------------------------
+
+func _reload_settings_resource() -> void:
+	if not _settings:
+		_settings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE)
+
+
+func _add_string_array_property_drop_down(properties: Array) -> void:
+	var string_array_properties: = _get_possible_string_array_properties()
+	var hint_string: String = string_array_properties.join(",")
+	
+	var dict: = {
+		name = "property",
+		type = TYPE_STRING,
+		hint = PROPERTY_HINT_ENUM,
+		hint_string = hint_string,
+		usage = PROPERTY_USAGE_DEFAULT
+	}
+	properties.append(dict)
+
+
+func _get_possible_string_array_properties() -> PoolStringArray:
+	var string_array_properties: = PoolStringArray()
+	
+	var settings_properties: = _settings.get_property_list()
+	for property_dict in settings_properties:
+		if property_dict.type == TYPE_ARRAY and property_dict.hint == HINT_STRING_ARRAY:
+			string_array_properties.append(property_dict.name)
+	
+	return string_array_properties
 
 ### -----------------------------------------------------------------------------------------------
