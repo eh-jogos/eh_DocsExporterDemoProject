@@ -1,4 +1,5 @@
 tool
+class_name eh_DocsExporterPlugin
 extends EditorPlugin
 
 ### Member Variables and Dependencies -------------------------------------------------------------
@@ -33,7 +34,7 @@ func enable_plugin() -> void:
 
 
 func _enter_tree():
-	_settings = load(PATH_SETTINGS_RESOURCE)
+	_reload_setting_resource()
 	_docs_exporter_tab = load(PATH_TAB).instance()
 	add_control_to_container(
 			EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT, 
@@ -52,6 +53,7 @@ func _exit_tree():
 
 
 func save_external_data() -> void:
+	_reload_setting_resource()
 	ResourceSaver.save(PATH_SETTINGS_RESOURCE, _settings)
 
 ### -----------------------------------------------------------------------------------------------
@@ -63,6 +65,15 @@ func save_external_data() -> void:
 
 
 ### Private Methods -------------------------------------------------------------------------------
+
+func _reload_setting_resource() -> void:
+	if not _settings:
+		if not ResourceLoader.exists(PATH_SETTINGS_RESOURCE):
+			_settings = eh_DocsSettings.new()
+			ResourceSaver.save(PATH_SETTINGS_RESOURCE, _settings)
+		
+		_settings = load(PATH_SETTINGS_RESOURCE)
+
 
 func _create_shared_db(path: String) -> void:
 	var dict_variable: DictionaryVariable = DictionaryVariable.new()

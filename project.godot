@@ -104,6 +104,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/StringVariableLineEdit.gd"
 }, {
+"base": "EditorPlugin",
+"class": "eh_DocsExporterPlugin",
+"language": "GDScript",
+"path": "res://addons/eh_jogos.docs-exporter/eh_docs_exporter_plugin.gd"
+}, {
 "base": "Resource",
 "class": "eh_DocsSettings",
 "language": "GDScript",
@@ -129,6 +134,7 @@ _global_script_class_icons={
 "StringVariable": "",
 "StringVariableArray": "",
 "StringVariableLineEdit": "",
+"eh_DocsExporterPlugin": "",
 "eh_DocsSettings": ""
 }
 
