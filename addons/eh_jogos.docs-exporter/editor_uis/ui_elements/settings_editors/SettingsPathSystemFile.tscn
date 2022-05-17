@@ -14,9 +14,6 @@ rect_pivot_offset = Vector2( 939, 97 )
 size_flags_horizontal = 3
 custom_constants/separation = 5
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 property = "save_path"
 
 [node name="LineEdit" type="LineEdit" parent="."]
@@ -25,7 +22,6 @@ margin_bottom = 22.0
 size_flags_horizontal = 3
 custom_styles/focus = ExtResource( 4 )
 custom_styles/normal = ExtResource( 4 )
-text = "/mnt/WORK_SSD/eh_jogos/ProjetosGames/_00_MyToolsAndLibraries/eh_DocsExporter/DemoProject/addons/eh_jogos.docs-exporter/reference.json"
 clear_button_enabled = true
 script = ExtResource( 3 )
 
@@ -44,9 +40,6 @@ anchor_bottom = 1.0
 margin_left = -5.0
 mouse_filter = 2
 color = Color( 0.396078, 0.584314, 0.784314, 0.239216 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="FileDialog" type="FileDialog" parent="FileExplorerButton"]
 margin_left = -993.0
@@ -56,6 +49,7 @@ margin_bottom = 451.0
 window_title = "Select where to save json reference"
 mode_overrides_title = false
 access = 2
+filters = PoolStringArray( "" )
 show_hidden_files = true
 current_dir = "/mnt/WORK_SSD/eh_jogos/ProjetosGames/_00_MyToolsAndLibraries/eh_DocsExporter/DemoProject"
 current_path = "/mnt/WORK_SSD/eh_jogos/ProjetosGames/_00_MyToolsAndLibraries/eh_DocsExporter/DemoProject/"

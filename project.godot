@@ -9,16 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Resource",
-"class": "ArrayVariable",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.shared_variables/Array/ArrayVariable.gd"
-}, {
-"base": "Resource",
-"class": "BoolVariable",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.shared_variables/BoolVariable.gd"
-}, {
 "base": "CheckBox",
 "class": "BoolVariableCheckbox",
 "language": "GDScript",
@@ -43,11 +33,6 @@ _global_script_classes=[ {
 "class": "Collapsible",
 "language": "GDScript",
 "path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/Collapsible.gd"
-}, {
-"base": "Resource",
-"class": "DictionaryVariable",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.shared_variables/DictionaryVariable.gd"
 }, {
 "base": "StringLineEdit",
 "class": "FilePathLineEdit",
@@ -84,25 +69,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/resizable_text_edit/ResizableTextEdit.gd"
 }, {
-"base": "Resource",
-"class": "StringArrayVariable",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.shared_variables/Array/StringArrayVariable.gd"
-}, {
 "base": "HBoxContainer",
 "class": "StringLineEdit",
 "language": "GDScript",
 "path": "res://addons/eh_jogos.docs-exporter/editor_uis/ui_elements/string_line_edit/StringLineEdit.gd"
-}, {
-"base": "Resource",
-"class": "StringVariable",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.shared_variables/StringVariable.gd"
-}, {
-"base": "Resource",
-"class": "StringVariableArray",
-"language": "GDScript",
-"path": "res://addons/eh_jogos.shared_variables/StringVariableArray.gd"
 }, {
 "base": "EditorPlugin",
 "class": "eh_DocsExporterPlugin",
@@ -115,14 +85,11 @@ _global_script_classes=[ {
 "path": "res://addons/eh_jogos.docs-exporter/custom_resources/DocsSettings.gd"
 } ]
 _global_script_class_icons={
-"ArrayVariable": "",
-"BoolVariable": "",
 "BoolVariableCheckbox": "",
 "CategoryOptionalData": "",
 "CategoryOptionalDataDict": "",
 "CategoryOptions": "",
 "Collapsible": "",
-"DictionaryVariable": "",
 "FilePathLineEdit": "",
 "HugoMarkdownDocsExporter": "",
 "JsonIO": "",
@@ -130,10 +97,7 @@ _global_script_class_icons={
 "PathLineEdit": "",
 "ReferenceFormatter": "",
 "ResizableTextEdit": "",
-"StringArrayVariable": "",
 "StringLineEdit": "",
-"StringVariable": "",
-"StringVariableArray": "",
 "eh_DocsExporterPlugin": "",
 "eh_DocsSettings": ""
 }

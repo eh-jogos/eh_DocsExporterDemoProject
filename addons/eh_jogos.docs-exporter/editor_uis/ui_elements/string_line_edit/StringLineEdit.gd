@@ -23,7 +23,6 @@ export var is_removable: = false setget _set_is_removable
 #--- private variables - order: export > normal var > onready -------------------------------------
 
 var _index: int = -1
-var _string_variable: StringVariable = null
 
 onready var _line_edit: LineEdit = $ValueLineEdit
 onready var _delete_button: Button = $DeleteButton
@@ -46,7 +45,6 @@ func set_field_value(value: String, index: int = -1) -> void:
 		_set_is_removable(false)
 	else:
 		_set_is_removable(true)
-
 
 ### -----------------------------------------------------------------------------------------------
 

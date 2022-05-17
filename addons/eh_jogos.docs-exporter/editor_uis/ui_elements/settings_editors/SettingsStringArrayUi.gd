@@ -23,7 +23,7 @@ var _property: String = ""
 var _string_array: Array = []
 var _possible_properties: PoolStringArray = PoolStringArray()
 
-onready var _settings: eh_DocsSettings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE)
+onready var _settings: eh_DocsSettings = eh_DocsExporterPlugin.get_doc_settings()
 onready var _field_container: VBoxContainer = $Fields
 
 ### -----------------------------------------------------------------------------------------------
@@ -32,6 +32,9 @@ onready var _field_container: VBoxContainer = $Fields
 ### Built in Engine Methods -----------------------------------------------------------------------
 
 func _ready():
+	if eh_DocsExporterPlugin.is_current_edited_scene(self):
+		return
+	
 	initialize_editor_fields()
 
 ### -----------------------------------------------------------------------------------------------
@@ -98,7 +101,9 @@ func _get_property_list() -> Array:
 	var properties: = []
 	
 	_reload_settings_resource()
-	_add_string_array_property_drop_down(properties)
+	_possible_properties = _get_possible_string_array_properties()
+	var dict: Dictionary = eh_DocsSettings.get_property_drop_down(_possible_properties)
+	properties.append(dict)
 	
 	return properties
 
@@ -133,21 +138,7 @@ func _set(property: String, value) -> bool:
 
 func _reload_settings_resource() -> void:
 	if not _settings:
-		_settings = load(eh_DocsExporterPlugin.PATH_SETTINGS_RESOURCE)
-
-
-func _add_string_array_property_drop_down(properties: Array) -> void:
-	_possible_properties = _get_possible_string_array_properties()
-	var hint_string: String = _possible_properties.join(",")
-	
-	var dict: = {
-		name = "property",
-		type = TYPE_STRING,
-		hint = PROPERTY_HINT_ENUM,
-		hint_string = hint_string,
-		usage = PROPERTY_USAGE_DEFAULT
-	}
-	properties.append(dict)
+		_settings = eh_DocsExporterPlugin.get_doc_settings()
 
 
 func _get_possible_string_array_properties() -> PoolStringArray:

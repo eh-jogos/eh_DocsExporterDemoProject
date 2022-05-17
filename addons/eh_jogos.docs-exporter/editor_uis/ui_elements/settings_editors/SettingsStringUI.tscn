@@ -6,10 +6,8 @@
 margin_right = 58.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
+text = "/mnt/WORK_SSD/eh_jogos/ProjetosGames/_00_MyToolsAndLibraries/eh_DocsExporter/DemoProject/addons/eh_jogos.docs-exporter/reference.json"
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 property = "save_path"
 
 [connection signal="text_changed" from="." to="." method="_on_LineEdit_text_changed"]

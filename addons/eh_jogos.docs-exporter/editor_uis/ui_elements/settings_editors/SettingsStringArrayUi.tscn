@@ -10,9 +10,6 @@ margin_right = 1018.0
 margin_bottom = 35.0
 size_flags_horizontal = 3
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 property = "directories"
 
 [node name="Fields" type="VBoxContainer" parent="."]

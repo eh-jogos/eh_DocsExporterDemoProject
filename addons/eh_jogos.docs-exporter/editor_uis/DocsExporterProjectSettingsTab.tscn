@@ -17,9 +17,6 @@ border_color = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -43,7 +40,7 @@ __meta__ = {
 
 [node name="ContentList" type="VBoxContainer" parent="Panel/ScrollContainer"]
 margin_right = 1010.0
-margin_bottom = 654.0
+margin_bottom = 1212.0
 size_flags_horizontal = 3
 custom_constants/separation = 25
 __meta__ = {
@@ -52,17 +49,17 @@ __meta__ = {
 
 [node name="JsonSection" parent="Panel/ScrollContainer/ContentList" instance=ExtResource( 11 )]
 margin_right = 1010.0
-margin_bottom = 239.0
+margin_bottom = 237.0
 
 [node name="GithubSection" parent="Panel/ScrollContainer/ContentList" instance=ExtResource( 2 )]
-margin_top = 264.0
+margin_top = 262.0
 margin_right = 1010.0
-margin_bottom = 471.0
+margin_bottom = 469.0
 
 [node name="HugoSection" parent="Panel/ScrollContainer/ContentList" instance=ExtResource( 3 )]
-margin_top = 496.0
+margin_top = 494.0
 margin_right = 1010.0
-margin_bottom = 654.0
+margin_bottom = 1212.0
 
 [node name="Outline" type="Panel" parent="."]
 anchor_right = 1.0

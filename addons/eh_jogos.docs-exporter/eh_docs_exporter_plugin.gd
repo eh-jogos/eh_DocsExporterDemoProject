@@ -20,7 +20,6 @@ const PATH_SETTINGS_RESOURCE = "res://addons/eh_jogos.docs-exporter/docs_setting
 var _settings: eh_DocsSettings
 
 var _docs_exporter_tab: Control
-var _shared_variables_path = "res://addons/eh_jogos.docs-exporter/shared_variables/"
 
 ### -----------------------------------------------------------------------------------------------
 
@@ -28,10 +27,7 @@ var _shared_variables_path = "res://addons/eh_jogos.docs-exporter/shared_variabl
 ### Built in Engine Methods -----------------------------------------------------------------------
 
 func enable_plugin() -> void:
-	_create_shared_db(_shared_variables_path + "dict_custom_class_db.tres")
-	_create_shared_db(_shared_variables_path + "dict_custom_inheritance_db.tres")
-	_create_shared_db(_shared_variables_path + "dict_category_db.tres")
-
+	_create_docs_settings_resource()
 
 func _enter_tree():
 	_reload_setting_resource()
@@ -40,7 +36,6 @@ func _enter_tree():
 			EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT, 
 			_docs_exporter_tab
 	)
-	_docs_exporter_tab.initialize_tab(_settings, get_editor_interface())
 
 
 func _exit_tree():
@@ -61,23 +56,35 @@ func save_external_data() -> void:
 
 ### Public Methods --------------------------------------------------------------------------------
 
+static func get_doc_settings() -> eh_DocsSettings:
+	var settings: eh_DocsSettings = load(PATH_SETTINGS_RESOURCE)
+	return settings
+
+
+static func is_current_edited_scene(root_node: Node) -> bool:
+	var value: bool = Engine.editor_hint
+	
+	if value:
+		var editor_script: = EditorScript.new()
+		var editor_interface = editor_script.get_editor_interface()
+		value = editor_interface.get_edited_scene_root() == root_node
+	
+	return value
+
 ### -----------------------------------------------------------------------------------------------
 
 
 ### Private Methods -------------------------------------------------------------------------------
 
+func _create_docs_settings_resource() -> void:
+	if not ResourceLoader.exists(PATH_SETTINGS_RESOURCE):
+		_settings = eh_DocsSettings.new()
+		ResourceSaver.save(PATH_SETTINGS_RESOURCE, _settings)
+
+
 func _reload_setting_resource() -> void:
 	if not _settings:
-		if not ResourceLoader.exists(PATH_SETTINGS_RESOURCE):
-			_settings = eh_DocsSettings.new()
-			ResourceSaver.save(PATH_SETTINGS_RESOURCE, _settings)
-		
+		_create_docs_settings_resource()
 		_settings = load(PATH_SETTINGS_RESOURCE)
-
-
-func _create_shared_db(path: String) -> void:
-	var dict_variable: DictionaryVariable = DictionaryVariable.new()
-	if not ResourceLoader.exists(path):
-		ResourceSaver.save(path, dict_variable)
 
 ### -----------------------------------------------------------------------------------------------
